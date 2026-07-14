@@ -25,10 +25,20 @@
             }
         }
     }
+    &__video {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
     &__wrap {
         background: var(--tg-secondary-color);
         border: 1px solid var(--tg-border-1);
         @include border-radius(10px);
+        // Video variant: clip the player to the card's rounded corners.
+        &--video {
+            overflow: hidden;
+            line-height: 0;
+        }
         &-inner {
             border: 1px solid var(--tg-border-1);
             @include border-radius(10px);

@@ -2337,6 +2337,15 @@ textarea {
   -ms-border-radius: 10px;
   border-radius: 10px;
 }
+.token__wrap--video {
+  overflow: hidden;
+  line-height: 0;
+}
+.token__video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .token__wrap-inner {
   border: 1px solid var(--tg-border-1);
   -webkit-border-radius: 10px;
