@@ -5,8 +5,8 @@ FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/
 COPY blog.html /usr/share/nginx/html/
 COPY blog-details.html /usr/share/nginx/html/
+COPY blog-details-bl653.html /usr/share/nginx/html/
 COPY assets/ /usr/share/nginx/html/assets/
-COPY docs/ /usr/share/nginx/html/docs/
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf

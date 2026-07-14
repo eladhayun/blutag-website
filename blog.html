@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>BluTag - Smart Asset Tracking & Anti-Theft Solution</title>
-    <meta name="description" content="BluTag - Advanced tracking solution for vehicles and equipment">
+    <title>BluTag - Engineering notes</title>
+    <meta name="description" content="Engineering notes from the team building BluTag - beacon power work, and how tracking over Apple's Find My network actually works.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -45,27 +45,23 @@
                         <div class="tgmenu__wrap">
                             <nav class="tgmenu__nav">
                                 <div class="logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo.svg" alt="Logo"></a>
+                                    <a href="index.html"><img src="assets/img/logo/logo.svg" alt="BluTag"></a>
                                 </div>
                                 <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
                                     <ul class="navigation">
                                         <li><a href="index.html#home">Home</a></li>
                                         <li><a href="index.html#features">features</a></li>
-                                        <li><a href="index.html#token">token</a></li>
-                                        <li><a href="index.html#work">how it works</a></li>
+                                        <li><a href="index.html#network">how it works</a></li>
+                                        <li><a href="index.html#expect">what to expect</a></li>
                                         <li><a href="index.html#roadmap">roadmap</a></li>
-                                        <li class="active menu-item-has-children"><a href="blog.html">blog</a>
-                                            <ul class="sub-menu">
-                                                <li class="active"><a href="blog.html">Our Blog</a></li>
-                                                <li><a href="blog-details.html">Blog Details</a></li>
-                                            </ul>
-                                        </li>
+                                        <li class="active"><a href="blog.html">blog</a></li>
                                     </ul>
                                 </div>
                                 <div class="tgmenu__action">
                                     <ul class="list-wrap">
+                                        <li class="header-signin"><a href="https://blutag-app.jshipster.io">sign in</a></li>
                                         <li class="header-btn">
-                                            <a href="#!" class="tg-btn">buy now</a>
+                                            <a href="mailto:api@blutag.io?subject=BluTag%20demo%20request" class="tg-btn">book a demo</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -82,25 +78,10 @@
             <nav class="tgmobile__menu-box">
                 <div class="close-btn"><i class="tg-flaticon-close-1"></i></div>
                 <div class="nav-logo">
-                    <a href="index.html"><img src="assets/img/logo/logo.svg" alt="Logo"></a>
-                </div>
-                <div class="tgmobile__search">
-                    <form action="#">
-                        <input type="text" placeholder="Search here...">
-                        <button><i class="fas fa-search"></i></button>
-                    </form>
+                    <a href="index.html"><img src="assets/img/logo/logo.svg" alt="BluTag"></a>
                 </div>
                 <div class="tgmobile__menu-outer">
                     <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-                </div>
-                <div class="social-links">
-                    <ul class="list-wrap">
-                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                    </ul>
                 </div>
             </nav>
         </div>
@@ -121,8 +102,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="banner__content breadcrumb__content">
-                            <span class="sub-title">Built on web3. Powered by You</span>
-                            <h2 class="title">Blog & insights</h2>
+                            <span class="sub-title">Notes from the workbench</span>
+                            <h2 class="title">Engineering notes</h2>
                         </div>
                     </div>
                 </div>
@@ -137,174 +118,24 @@
         <section class="blog__post-area section-py-120">
             <div class="container">
                 <div class="row justify-content-center gutter-50">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post01.jpg" alt="img"></a>
-                            </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="blog__post-item">
                             <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Blockchain enhances transparency in food supply chains.</a></h2>
+                                <span class="date">July 14, 2026</span>
+                                <h2 class="title"><a href="blog-details.html">How a tag with no SIM reports its location</a></h2>
+                                <p>A BluTag beacon has no cellular radio, no GPS receiver and no way to phone home. It still turns up on a map. The trick is that it never reports its own location at all &mdash; it persuades passing strangers' phones to do it, without those phones, Apple, or us ever learning where it is.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post02.jpg" alt="img"></a>
-                            </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="blog__post-item">
                             <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Lagos plans to integrate blockchain in education.</a></h2>
+                                <span class="date">May 3, 2026</span>
+                                <h2 class="title"><a href="blog-details-bl653.html">Why our beacon has no 32 kHz crystal</a></h2>
+                                <p>The BL653 module ships without a 32 kHz watch crystal, and the obvious fix &mdash; asking Zephyr for one anyway &mdash; quietly costs about 3 mA of continuous idle draw. Notes on retargeting the firmware, dropping a power setting that turned out to be a no-op, and why we still will not quote you a battery life.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post03.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Bangladesh should embrace blockchain, says official.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post04.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Cryptoverse: Blockchain bridges encounter challenges ahead.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post05.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Fifteen Indian banks adopt blockchain trade finance.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post06.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Blockchain summit in Bangladesh scheduled tomorrow.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post07.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Bangladesh hosts three-day Blockchain Olympiad event.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post08.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Rethinking blockchain for business amid GenAI era.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post09.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Digital Bangladesh introduces blockchain, emerging technologies.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post10.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Blockchain seminar held at AIUB university.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post11.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Blockchain combats fake drugs in Nigeria's markets.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post12.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Thriving Skills to host first blockchain summit.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post13.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Enhancing tax transparency with blockchain technology.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post14.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Blockchain's potential extends beyond Bitcoin applications.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog__post-item shine__animate-item">
-                            <div class="blog__post-thumb">
-                                <a href="blog-details.html" class="shine__animate-link"><img src="assets/img/blog/blog_post15.jpg" alt="img"></a>
-                            </div>
-                            <div class="blog__post-content">
-                                <span class="date">January 31, 2025</span>
-                                <h2 class="title"><a href="blog-details.html">Bangladesh, India conduct first blockchain-enabled trade.</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="load-more-btn text-center">
-                    <a href="#!" class="tg-btn tg-btn-two">load more</a>
                 </div>
             </div>
         </section>
@@ -321,53 +152,18 @@
                     <div class="col-lg-8">
                         <div class="footer__content">
                             <div class="footer__logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.svg" alt="logo"></a>
+                                <a href="index.html"><img src="assets/img/logo/logo.svg" alt="BluTag"></a>
                             </div>
-                            <span class="sub-title">Built on web3. Powered by You</span>
-                            <h2 class="title">Join with our <span>future</span> of Webzo currency</h2>
-                            <div class="team__social-wrap">
-                                <ul class="list-wrap">
-                                    <li>
-                                        <a href="#!">
-                                            <div class="shape">
-                                                <img src="assets/img/icon/icons_bg.svg" alt="shape">
-                                            </div>
-                                            <img src="assets/img/icon/facebook.svg" alt="icon" class="icon">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">
-                                            <div class="shape">
-                                                <img src="assets/img/icon/icons_bg.svg" alt="shape">
-                                            </div>
-                                            <img src="assets/img/icon/twitter.svg" alt="icon" class="icon">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">
-                                            <div class="shape">
-                                                <img src="assets/img/icon/icons_bg.svg" alt="shape">
-                                            </div>
-                                            <img src="assets/img/icon/telegram.svg" alt="icon" class="icon">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">
-                                            <div class="shape">
-                                                <img src="assets/img/icon/icons_bg.svg" alt="shape">
-                                            </div>
-                                            <img src="assets/img/icon/discord.svg" alt="icon" class="icon">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <span class="sub-title">No SIM. No wiring. No monthly data plan.</span>
+                            <h2 class="title">Put a BluTag on it and <span>get on with the job</span></h2>
+                            <a href="mailto:api@blutag.io?subject=BluTag%20demo%20request" class="tg-btn">book a demo</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="footer__bottom">
                 <div class="copyright-text">
-                    <p>Copyright & design by <a href="https://themeforest.net/user/themeadapt" target="_blank">@ThemeAdapt</a> - 2025</p>
+                    <p>&copy; 2026 BluTag. Asset tracking over Apple's Find My network. Not affiliated with or endorsed by Apple Inc.</p>
                 </div>
             </div>
         </div>
@@ -377,7 +173,6 @@
         </div>
     </footer>
     <!-- footer-area-end -->
-
 
 
 

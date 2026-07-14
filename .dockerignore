@@ -7,3 +7,11 @@ README.md
 .vscode
 .idea
 
+# Orphaned PHP contact-form handler from the original template. No form
+# references it and nginx:alpine has no PHP, so shipping it would serve
+# the source as plaintext.
+assets/mail.php
+
+# ThemeForest template manual. Not ours to publish.
+docs
+

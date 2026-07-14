@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>BluTag - How a tag with no SIM reports its location</title>
-    <meta name="description" content="A BluTag beacon has no modem and no GPS, and does not know where it is. How it still lands on your map, and what that design costs.">
+    <title>BluTag - Why our beacon has no 32 kHz crystal</title>
+    <meta name="description" content="The BL653 has no watch crystal, and asking Zephyr for one anyway costs about 3 mA of idle draw. Notes on beacon power work, and why we will not quote a battery life.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -103,7 +103,7 @@
                     <div class="col-lg-12">
                         <div class="banner__content breadcrumb__content">
                             <span class="sub-title">Engineering notes</span>
-                            <h2 class="title">How a tag with no SIM reports its location</h2>
+                            <h2 class="title">Why our beacon has no 32 kHz crystal</h2>
                         </div>
                     </div>
                 </div>
@@ -119,38 +119,38 @@
             <div class="container">
                 <div class="blog__details-wrap">
                     <div class="blog__details-content">
-                        <span class="date">July 14, 2026</span>
-                        <h2 class="title">A tag that never knows where it is</h2>
-                        <p>A BluTag beacon is a Bluetooth radio, a battery and a small microcontroller. It has no cellular modem, no GPS receiver and no Wi-Fi. It cannot phone home, and at no point does it have any idea where on earth it is. It still turns up on a map in your dashboard, usually within minutes of somebody walking past it. This is the whole trick, start to finish.</p>
-                        <p>When we provision a beacon, we generate an elliptic-curve keypair on the P-224 curve. The private half stays with you. The public half &mdash; 28 bytes &mdash; is patched directly into the firmware image before it is flashed, and becomes the only thing the tag ever says out loud. Note the direction of that: the private key never travels to the device, never crosses the air, and is never stored on the beacon. If somebody prises your tag open and dumps its flash, they get a public key. That is all it was ever holding.</p>
-                        <p>Every fifty seconds the tag wakes up, advertises that public key over Bluetooth Low Energy for two seconds at &minus;4 dBm, and goes back to sleep. It is not connecting to anything. It is not listening for a reply. It is shouting a number into the street and then going quiet again for another forty-eight seconds.</p>
-                        <p>Any Apple device in earshot hears it: a phone in a passing pocket, a watch on a delivery driver, a laptop in the cab of the next van over. iOS recognises the advertisement format, takes its own GPS position, encrypts that position against the public key it just overheard, and uploads the ciphertext to Apple. The owner of that phone is never told, never asked, and gets nothing out of it. Apple ends up storing a blob it cannot read, indexed only by a hash of the key.</p>
-                        <p>When your dashboard wants a position, we ask Apple for any reports matching your tag's key hash, and decrypt them with your private key. Apple never held the plaintext. We hold it only long enough to put a pin on your map. That is the entire pipeline, and the reason there is no SIM to activate, no data plan to pay for and no gateway to install in your yard.</p>
+                        <span class="date">May 3, 2026</span>
+                        <h2 class="title">Three milliamps, hiding in a default</h2>
+                        <p>Our beacon firmware targets the Ezurio BL653, a module built around Nordic's nRF52833. It is a close cousin of the nRF52833 development kit, close enough that most code moves across untouched, and close enough that one difference between them can cost you your entire power budget without a single warning at build time.</p>
+                        <p>The development kit has a 32.768 kHz watch crystal on the board. The BL653 module does not. If you say nothing, Zephyr's BLE controller needs a low-frequency clock from somewhere, and falls back to synthesising one from the high-frequency oscillator. That works. It also means the high-frequency clock can never switch off, which pins the module at roughly 3 mA of continuous idle draw &mdash; on a device whose whole reason for existing is to sit still and say nothing for forty-eight seconds at a time. Everything looks healthy. The tag advertises correctly. It simply drains far faster than it should, and nothing in the build output mentions it.</p>
+                        <p>The fix is three lines of Kconfig: run the low-frequency clock from the internal RC oscillator, and turn on its calibration. RC drifts more than a crystal would, but we are doing non-connectable advertising &mdash; the tag never has to hold a timing window open with a peer &mdash; so 500 ppm is comfortably good enough. The high-frequency oscillator is then free to go back to sleep between bursts, which is the entire point.</p>
+                        <p>While we were in there, a few other defaults turned out to be worth money.</p>
                         <div class="blog__details-inner-wrap">
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-lg-10">
                                     <div class="blog__details-inner-content">
-                                        <h3 class="title-two">The chain, end to end</h3>
+                                        <h3 class="title-two">What actually moved the needle</h3>
                                         <ul class="list-wrap">
-                                            <li><strong>Provision.</strong> A P-224 keypair is generated. The private key stays with you; the 28-byte public key is compiled into the firmware image.</li>
-                                            <li><strong>Broadcast.</strong> The tag advertises that public key for two seconds every fifty seconds, then sleeps. It never listens and never connects.</li>
-                                            <li><strong>Encrypt.</strong> A passing Apple device fixes its own position and encrypts it against the key it overheard.</li>
-                                            <li><strong>Relay.</strong> The ciphertext goes to Apple, indexed by a hash of the key. Apple stores something it cannot read.</li>
-                                            <li><strong>Decrypt.</strong> We fetch reports by hash and decrypt them with your private key to draw your map.</li>
+                                            <li><strong>Low-frequency clock on RC, not synth.</strong> The big one. Roughly 3 mA of continuous idle draw, removed by three lines of configuration.</li>
+                                            <li><strong>Console, UART, printk and RTT all off.</strong> Worth about 1&ndash;2 mA continuous against the defaults. There is deliberately no serial output on a shipping tag; if you need to debug one, you turn them back on.</li>
+                                            <li><strong>TX power down to &minus;4 dBm from 0 dBm.</strong> A small reduction in burst energy, and still comfortably in range of a phone in the same room.</li>
+                                            <li><strong>DCDC regulator on.</strong> The board's own defconfig already handles this for the BL653, so the Kconfig symbol we originally reached for was both unnecessary and, as of the current SDK, no longer valid.</li>
+                                            <li><strong>A 4% duty cycle.</strong> Two seconds of advertising, forty-eight seconds asleep. Legacy advertising caps the on-air interval at about 40.96 seconds, so the fifty-second cadence has to be driven from the application rather than handed to the controller.</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <h2 class="title">What it costs</h2>
-                        <p>Our firmware is built on OpenHaystack, the research project out of the Secure Mobile Networking Lab at TU Darmstadt that worked out how to speak this protocol with non-Apple hardware. Their own README carries a warning we think belongs on our website rather than buried in a repository:</p>
+                        <p>One change we made and then reverted is worth recording, because it looked productive and was not. We had enabled Zephyr's power management subsystem, on the reasonable assumption that a power-sensitive device should have power management switched on. It does nothing here: <code>CONFIG_PM</code> depends on a capability that nRF52 parts do not advertise, so the symbol is quietly inert. The chip was already sleeping without it &mdash; the idle thread's wait-for-interrupt puts the CPU into System ON sleep and gates the peripherals automatically. The savings were never going to come from a Kconfig switch. They came from not leaving a UART running.</p>
+                        <h2 class="title">What we cannot tell you</h2>
+                        <p>We wrote a small tool to check our work, which reads peripheral state over J-Link while the chip runs, without halting it. It confirms the radio is disabled in nearly every sample, the DCDC regulator is enabled, the low-frequency clock is running on RC, and no interrupts are stuck active. One thing it taught us is that you cannot use the debugger to check whether the high-frequency clock is off: reading that register makes the probe pulse the oscillator, so it reports itself as always on. The measurement creates the result. That is a probe artifact, not a bug in the firmware.</p>
+                        <p>Which brings us to the limit of the whole exercise, in the tool's own words:</p>
                         <blockquote>
-                            <p>&ldquo; Accessories using our firmware broadcast a fixed public key and, therefore, are trackable by other devices in proximity. &rdquo;</p>
-                            <cite>OpenHaystack, SEEMOO Lab, TU Darmstadt</cite>
+                            <p>&ldquo; What it CANNOT prove: actual idle current draw. For real current numbers, use a PPK2 or in-line ammeter. &rdquo;</p>
+                            <cite>tools/check_sleep.sh</cite>
                         </blockquote>
-                        <p>That is worth sitting with, because it is the honest price of the design. A real AirTag rotates its broadcast key on a schedule, which is what stops a stranger with a scanner from recognising the same tag on Tuesday that they saw on Monday. Our beacons broadcast a fixed key. Your location data stays unreadable to everyone but you &mdash; that part of the cryptography is sound and does not depend on the key rotating. But the mere presence of a specific tag is, in principle, correlatable over time by somebody deliberately looking for it with their own scanner. For a generator in a yard or a trailer on a job site, that trade is usually worth making. We would rather you made it knowingly.</p>
-                        <p>The second cost is coverage, and it is the one that surprises people. Nothing about this design guarantees a position. A fix exists only because an Apple device happened to walk past, so the network is superb on a roadside or in a depot and thin behind a locked gate in a remote quarry. We poll Apple roughly every five minutes by default, tunable per organisation, but that is our polling rate rather than the tag's: the underlying report is only as fresh as the last stranger who passed it. Allow up to half an hour for a newly provisioned tag's first report to land.</p>
-                        <p>What you get in exchange is a tracker with no recurring cost, no cellular contract, nothing to wire into a vehicle, and a radio that is asleep 96% of the time. If you want to know what that sleep is actually worth in milliamps &mdash; and why we still will not quote you a battery life &mdash; that is <a href="blog-details-bl653.html">the other post</a>.</p>
+                        <p>So here is the thing we are not going to do, which every other tracker's website does. We are not going to quote you a battery life. We know the radio is asleep 96% of the time. We know which defaults were costing milliamps and we have removed them. What we do not have is a measured idle current from a proper power analyser across a real duty cycle at temperature, and until we do, any number with the word "years" in it would be arithmetic performed on a guess. When we have measured it, we will publish it, along with how we measured it.</p>
+                        <p>If you want the other half of the story &mdash; how a tag with no modem and no GPS ends up on a map at all &mdash; that is <a href="blog-details.html">over here</a>.</p>
                     </div>
                 </div>
             </div>
