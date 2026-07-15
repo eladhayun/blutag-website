@@ -28,6 +28,7 @@
     &__video {
         display: block;
         width: 100%;
+        max-width: 100%;
         height: auto;
     }
     &__wrap {
@@ -38,6 +39,18 @@
         &--video {
             overflow: hidden;
             line-height: 0;
+            // Full-bleed on phones: negate the column gutter so the square
+            // video spans the viewport instead of 94% of it. Only below 576px,
+            // where .container is still fluid — above that it is capped at a
+            // fixed max-width, so this would strip the card's corners without
+            // ever reaching the viewport edge.
+            @media (max-width: 575.98px) {
+                margin-left: -15px;
+                margin-right: -15px;
+                border-left: 0;
+                border-right: 0;
+                @include border-radius(0);
+            }
         }
         &-inner {
             border: 1px solid var(--tg-border-1);

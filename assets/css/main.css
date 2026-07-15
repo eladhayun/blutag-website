@@ -2341,9 +2341,23 @@ textarea {
   overflow: hidden;
   line-height: 0;
 }
+@media (max-width: 575.98px) {
+  .token__wrap--video {
+    margin-left: -15px;
+    margin-right: -15px;
+    border-left: 0;
+    border-right: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -o-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+  }
+}
 .token__video {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
 }
 .token__wrap-inner {
