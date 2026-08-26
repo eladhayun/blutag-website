@@ -8,9 +8,19 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - '.agents/**'
+      - '.claude/**'
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - '.agents/**'
+      - '.claude/**'
 
 jobs:
   test:
@@ -113,4 +123,3 @@ jobs:
           git add .
           git commit -m "Update blutag-website image to ${GITHUB_SHA::7}" || echo "No changes to commit"
           git push
-
